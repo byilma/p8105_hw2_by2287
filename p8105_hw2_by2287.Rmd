@@ -27,9 +27,9 @@ trash_wheel = read_xlsx(
 ```
 
 
-### Read in & clean the percipitation data for 2017 & 2018
-```{r read in 2017 & 2018 percipitation data}
-percip_2017 = read_xlsx(
+### Read in & clean the precipitation data for 2017 & 2018
+```{r read in 2017 & 2018 precipitation data}
+precip_2017 = read_xlsx(
                   path = "./data/Trash-Wheel-Collection-Totals-8-6-19.xlsx", 
                   sheet = "2017 Precipitation",
                   skip = 1) %>% 
@@ -39,7 +39,7 @@ percip_2017 = read_xlsx(
   relocate(year)
 
 
-percip_2018 = read_xlsx(
+precip_2018 = read_xlsx(
                   path = "./data/Trash-Wheel-Collection-Totals-8-6-19.xlsx", 
                   sheet = "2018 Precipitation", 
                   skip = 1) %>% 
@@ -49,10 +49,10 @@ percip_2018 = read_xlsx(
    relocate(year)
                   
 
-percip_df = bind_rows(percip_2017, percip_2018)
+precip_df = bind_rows(precip_2017, precip_2018)
 
 
-percip_df = percip_df %>% 
+precip_df = precip_df %>% 
       mutate(month = month.name[month])
 ```
 
