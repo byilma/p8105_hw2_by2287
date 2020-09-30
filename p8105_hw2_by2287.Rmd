@@ -11,7 +11,7 @@ library(readxl)
 
 ## Problem 1 
 
-### Read in & clea the trash-wheel dataset
+### Read in & clean the trash-wheel dataset
 ```{r read in & clean in trash_wheel data}
 trash_wheel = read_xlsx(
                   path = "./data/Trash-Wheel-Collection-Totals-8-6-19.xlsx", 
@@ -25,5 +25,33 @@ trash_wheel = read_xlsx(
               sports_balls = as.integer(sports_balls)
             ) 
 ```
+
+
+### Read in & clean the percipitation data for 2017 & 2018
+```{r read in 2017 & 2018 percipitation data}
+percip_2017 = read_xlsx(
+                  path = "./data/Trash-Wheel-Collection-Totals-8-6-19.xlsx", 
+                  sheet = "2017 Precipitation",
+                  skip = 1) %>% 
+  janitor::clean_names() %>% 
+  drop_na(month) %>% 
+  mutate(year = 2017) %>% 
+  relocate(year)
+
+
+percip_2018 = read_xlsx(
+                  path = "./data/Trash-Wheel-Collection-Totals-8-6-19.xlsx", 
+                  sheet = "2018 Precipitation", 
+                  skip = 1) %>% 
+  janitor::clean_names() %>% 
+  drop_na(month) %>% 
+  mutate(year = 2018) %>% 
+   relocate(year)
+                  
+
+percip_df = bind_rows(percip_2017, percip_2018)
+
+```
+
 
 
