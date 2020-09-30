@@ -26,6 +26,10 @@ trash_wheel = read_xlsx(
             ) 
 ```
 
+The dataset trash_wheel consists of `r nrow(trash_wheel)` rows and `r ncol(trash_wheel)` columns. It includes 
+columns that capture information on things like the total amount of `r trash_wheel %>% select(plastic_bottles, grocery_bags, sports_balls) %>% names()` 
+collected by Mr Trash Wheel, by year. For instance, the median sport balls collected by My Trash Wheel in 2017 was `r trash_wheel %>% filter(year == 2017) %>% pull(sports_balls) %>% median()`.
+
 
 ### Read in & clean the precipitation data for 2017 & 2018
 ```{r read in 2017 & 2018 precipitation data}
@@ -56,5 +60,12 @@ precip_df = precip_df %>%
       mutate(month = month.name[month])
 ```
 
+The dataset precip_df, which contains the combined information of the 2017 & 2018 precipitation data, 
+consists of `r nrow(precip_df)` rows and `r ncol(precip_df)` columns. It contains information, on the 
+year, month, and the corresponding total precipitation. In the year 2017, the median precipitation was 
+`r precip_df %>% filter(year == 2017) %>% pull(total) %>% median() %>% round(2)` whereas 2018 saw a median precipitation of
+`r precip_df %>% filter(year == 2018) %>% pull(total) %>% median() %>% round(2)`.
+
+## Problem 2
 
 
