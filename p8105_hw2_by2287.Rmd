@@ -8,17 +8,22 @@ library(tidyverse)
 library(readxl)
 ```
 
-### Read in the trash-wheel dataset
-```{r read in trash_wheel data}
-trash_wheel = read_excel("./data/Trash-Wheel-Collection-Totals-8-6-19.xlsx", skip = 1, sheet = 1, range = "A2:N406")
+
+## Problem 1 
+
+### Read in & clea the trash-wheel dataset
+```{r read in & clean in trash_wheel data}
+trash_wheel = read_xlsx(
+                  path = "./data/Trash-Wheel-Collection-Totals-8-6-19.xlsx", 
+                  sheet = 1, 
+                  skip = 1,
+                  range = cell_cols("A:N")) %>% 
+	        janitor::clean_names() %>% 
+          filter(dumpster != "NA") %>% 
+            mutate(
+              sports_balls = round(sports_balls),
+              sports_balls = as.integer(sports_balls)
+            ) 
 ```
-
-#### Clean up the dataset
-```{r, clean up}
-trash_wheel =  janitor::clean_names(trash_wheel)
-
-trash_wheel =  filter(trash_wheel, dumpster != "NA")
-```
-
 
 
