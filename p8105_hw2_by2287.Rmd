@@ -61,7 +61,7 @@ precip_df = precip_df %>%
       mutate(month = month.name[month])
 ```
 
-The dataset precip_df, which contains the combined information of the 2017 & 2018 precipitation data, 
+The data set precip_df, which contains the combined information of the 2017 & 2018 precipitation data, 
 consists of `r nrow(precip_df)` rows and `r ncol(precip_df)` columns. It contains information, on the 
 year, month, and the corresponding total precipitation. In the year 2017, the median precipitation was 
 `r precip_df %>% filter(year == 2017) %>% pull(total) %>% median() %>% round(2)` whereas 2018 saw a median precipitation of
@@ -75,9 +75,26 @@ nyc_transit = read_csv("./data/NYC_Transit_Subway_Entrance_And_Exit_Data.csv") %
               select(line, station_name, station_latitude, station_longitude, route1:route11, entry, vending, entrance_type, ada) %>% 
               mutate(
                 entry = ifelse(entry == "YES", 1, 0)
-                )
-
+                ) 
 ```
+
+The data set nyc_transit is cleaner version of the NYC_Transit_Subway_Entrance_And_Exit_Data. It consists of `r nrow(nyc_transit)` rows and `r ncol(nyc_transit)` columns. It contains information on different subway stations in New York City, and has, in it, variables such as: `r nyc_transit %>% select(line:station_longitude, entrance_type) %>% names()`. The cleaning steps includes, converting the variable names to snake_case, selecting only relevant variables, and re-coding the `entry` variable from YES/NO to 1/0. In addition to these, it also contains information on what routes they take, and whether or not the stations are ADA compliant. These data are tidy. 
+
+
+From the nyc_transit data set, we can tell that there are `r nyc_transit %>% distinct(line,station_name) %>% count()` distinct stations. 
+Of those distinct stations, `r nyc_transit %>% filter(ada == TRUE) %>% distinct(line, station_name) %>% count()` are ADA compliant. 
+
+
+#What proportion of station entrances / exits without vending allow entrance?
+The proportion of station entrances / exits without vending that allow entrance is:
+`r (nyc_transit %>% select(entrance_type, vending, entry, line, station_name) %>% filter(entry == 1 & vending == "NO") %>% distinct() %>% count() / nyc_transit %>% distinct(line,station_name) %>% count()) * 100 %>% round(2)`
+
+
+
+
+Reformat data so that route number and route name are distinct variables. How many distinct stations serve the A train? Of the stations that serve the A train, how many are ADA compliant?
+
+`r nyc_transit %>% pull(entrance_type) %>% table()`
 
 
 
