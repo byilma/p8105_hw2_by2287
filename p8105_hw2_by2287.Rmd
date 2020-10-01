@@ -87,11 +87,25 @@ Of those distinct stations, `r nyc_transit %>% filter(ada == TRUE) %>% distinct(
 
 #What proportion of station entrances / exits without vending allow entrance?
 The proportion of station entrances / exits without vending that allow entrance is:
-`r (nyc_transit %>% select(entrance_type, vending, entry, line, station_name) %>% filter(entry == 1 & vending == "NO") %>% distinct() %>% count() / nyc_transit %>% distinct(line,station_name) %>% count())`
+`r (nyc_transit %>% filter(entry == 1 & vending == "NO") %>% count() / nyc_transit %>% filter(vending == "NO") %>% count())`
 
 ########Remaining questions:
 Reformat data so that route number and route name are distinct variables. 
 How many distinct stations serve the A train? Of the stations that serve the A train, how many are ADA compliant?
+
+Reformating data
+```{r reformat data}
+
+transit_pivot = nyc_transit %>% 
+  mutate(route8 = as.character(route8),
+         route9 = as.character(route9),
+         route10 = as.character(route10),
+         route11 = as.character(route11)
+         ) %>% 
+ pivot_longer(c("route1":"route11"), names_to = "route_name", values_to = "route_number", values_drop_na = T)
+  
+  
+```
 
 ## Problem 3
 ```{r read in data sets and tidy up}
